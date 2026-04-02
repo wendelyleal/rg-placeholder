@@ -7,8 +7,201 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <style>
+
+    /* ══════════════════════════════════════════════
+       AGE GATE
+    ══════════════════════════════════════════════ */
+    .age-gate {
+      position: fixed;
+      inset: 0;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      /* Blur + dark veil over ALL site content */
+      backdrop-filter: blur(22px) saturate(0.35) brightness(0.65);
+      -webkit-backdrop-filter: blur(22px) saturate(0.35) brightness(0.65);
+      background: rgba(5, 20, 13, 0.60);
+      transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                  visibility 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .age-gate.dismissed {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .age-gate__card {
+      background: #0a2a1d;
+      border: 1px solid rgba(255, 255, 255, 0.09);
+      /* Liquid-glass inner refraction edge */
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        0 48px 96px rgba(0, 0, 0, 0.60),
+        0 12px 32px rgba(0, 0, 0, 0.30);
+      border-radius: 24px;
+      max-width: 460px;
+      width: 100%;
+      padding: 48px 44px 44px;
+      text-align: center;
+      color: #fff;
+      font-family: 'Outfit', system-ui, sans-serif;
+      /* card entrance animation */
+      animation: ageCardIn 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+    }
+
+    @keyframes ageCardIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0)    scale(1);    }
+    }
+
+    /* ---------- Badge ---------- */
+    .age-gate__badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 88px;
+      height: 88px;
+      border-radius: 50%;
+      background: #E53935;
+      color: #fff;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 0 12px rgba(229, 57, 53, 0.18);
+    }
+
+    /* ---------- Logo ---------- */
+    .age-gate__logo {
+      width: 160px;
+      height: auto;
+      margin: 0 auto 28px;
+      display: block;
+      opacity: 0.9;
+    }
+
+    /* ---------- Typography ---------- */
+    .age-gate__title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.2;
+      color: #fff;
+      margin-bottom: 14px;
+    }
+
+    .age-gate__body {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.65;
+      color: rgba(255, 255, 255, 0.72);
+      margin-bottom: 14px;
+    }
+
+    .age-gate__body strong {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .age-gate__legal {
+      font-size: 12px;
+      line-height: 1.55;
+      color: rgba(255, 255, 255, 0.38);
+      margin-bottom: 32px;
+      padding: 12px 0 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* ---------- Divider ---------- */
+    .age-gate__separator {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.08);
+      margin: 20px 0;
+    }
+
+    /* ---------- Buttons ---------- */
+    .age-gate__actions {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .age-gate__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-family: 'Outfit', system-ui, sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition:
+        transform  0.18s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.18s cubic-bezier(0.22, 1, 0.36, 1),
+        background 0.18s ease,
+        opacity    0.18s ease;
+    }
+
+    .age-gate__btn:active {
+      transform: scale(0.98);
+    }
+
+    .age-gate__btn--primary {
+      background: #1a7a4c;
+      color: #fff;
+      box-shadow: 0 4px 14px rgba(26, 122, 76, 0.40);
+    }
+
+    .age-gate__btn--primary:hover {
+      background: #1e8e57;
+      box-shadow: 0 6px 20px rgba(26, 122, 76, 0.55);
+      transform: translateY(-1px);
+    }
+
+    .age-gate__btn--ghost {
+      background: rgba(255, 255, 255, 0.06);
+      color: rgba(255, 255, 255, 0.52);
+      border: 1px solid rgba(255, 255, 255, 0.09);
+    }
+
+    .age-gate__btn--ghost:hover {
+      background: rgba(255, 255, 255, 0.10);
+      color: rgba(255, 255, 255, 0.70);
+    }
+
+    /* ---------- Blocked state ---------- */
+    .age-gate__blocked-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(229, 57, 53, 0.15);
+      border: 1px solid rgba(229, 57, 53, 0.30);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      color: #E53935;
+    }
+
+    /* ---------- Mobile ---------- */
+    @media (max-width: 480px) {
+      .age-gate__card {
+        padding: 36px 28px 32px;
+      }
+      .age-gate__title { font-size: 20px; }
+    }
+
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
@@ -175,6 +368,70 @@
 </head>
 <body>
 
+  <!-- ══ AGE GATE ══ -->
+  <div id="ageGate" class="age-gate" role="dialog" aria-modal="true"
+       aria-labelledby="ageGateTitle" aria-describedby="ageGateDesc">
+
+    <div class="age-gate__card" id="ageGateCard">
+
+      <!-- ▸ Default: age prompt -->
+      <div id="ageGateContent">
+        <img src="rollingreen-logo-casino-rgb.svg" alt="Rollin' Green" class="age-gate__logo" />
+
+        <div class="age-gate__badge">21+</div>
+
+        <h1 id="ageGateTitle" class="age-gate__title">Age Verification Required</h1>
+
+        <p id="ageGateDesc" class="age-gate__body">
+          Rollin&rsquo; Green is a licensed cannabis retailer. New Jersey law requires all visitors
+          to be <strong>21 years of age or older</strong> — or hold a valid medical marijuana card —
+          to access our products and services.
+        </p>
+
+        <p class="age-gate__legal">
+          By continuing you confirm that you meet the age requirement and consent to a cookie being
+          stored on your device to remember your verification for the next 30 days. No personal data is collected.
+        </p>
+
+        <div class="age-gate__actions">
+          <button id="btnConfirm" class="age-gate__btn age-gate__btn--primary">
+            I Am 21 or Older — Enter
+          </button>
+          <button id="btnDeny" class="age-gate__btn age-gate__btn--ghost">
+            I Am Under 21
+          </button>
+        </div>
+      </div>
+
+      <!-- ▸ Blocked: shown when visitor admits to being under 21 -->
+      <div id="ageGateBlocked" hidden>
+        <div class="age-gate__blocked-icon" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+               stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+          </svg>
+        </div>
+
+        <h1 class="age-gate__title">Access Restricted</h1>
+
+        <p class="age-gate__body">
+          We&rsquo;re sorry — this site is only accessible to individuals who are
+          <strong>21 years of age or older</strong>. Please come back when you meet the legal age requirement.
+        </p>
+
+        <div class="age-gate__separator"></div>
+
+        <a href="https://www.google.com" class="age-gate__btn age-gate__btn--ghost">
+          Leave This Site
+        </a>
+      </div>
+
+    </div>
+  </div>
+  <!-- ══ /AGE GATE ══ -->
+
   <header class="top-bar" id="topBar">
     <div class="bar-left">
       <strong>We're under maintenance.</strong>
@@ -203,6 +460,56 @@
   </section>
 
   <script>
+    // ── Age Gate ────────────────────────────────────────────────
+    (function () {
+      const COOKIE_NAME = 'rg_age_verified';
+      const COOKIE_DAYS = 30;
+
+      function getCookie(name) {
+        const match = document.cookie.match(
+          new RegExp('(?:^|;\\s*)' + name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '=([^;]*)')
+        );
+        return match ? decodeURIComponent(match[1]) : null;
+      }
+
+      function setCookie(name, value, days) {
+        const expires = new Date(Date.now() + days * 864e5).toUTCString();
+        document.cookie =
+          name + '=' + encodeURIComponent(value) +
+          '; expires=' + expires +
+          '; path=/; SameSite=Lax';
+      }
+
+      const gate     = document.getElementById('ageGate');
+      const content  = document.getElementById('ageGateContent');
+      const blocked  = document.getElementById('ageGateBlocked');
+      const btnYes   = document.getElementById('btnConfirm');
+      const btnNo    = document.getElementById('btnDeny');
+
+      // Already verified → hide immediately with no animation
+      if (getCookie(COOKIE_NAME) === 'true') {
+        gate.style.display = 'none';
+        return;
+      }
+
+      // Confirm: 21+
+      btnYes.addEventListener('click', function () {
+        setCookie(COOKIE_NAME, 'true', COOKIE_DAYS);
+        gate.classList.add('dismissed');
+        // Remove from DOM after transition so it cannot be re-opened via DevTools visibility
+        gate.addEventListener('transitionend', function () {
+          gate.remove();
+        }, { once: true });
+      });
+
+      // Deny: under 21 — show hard block, no cookie set
+      btnNo.addEventListener('click', function () {
+        content.hidden = true;
+        blocked.hidden = false;
+      });
+    })();
+
+    // ── Scroll-shrink header ────────────────────────────────────
     const bar = document.getElementById('topBar');
     const THRESHOLD = 10;
 
